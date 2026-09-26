@@ -11,4 +11,4 @@ Este repositório reúne os templates fornecidos pelo professor ao longo do seme
 A pasta `tst` é um banco de questões variadas sobre os assuntos da disciplina. As resoluções em código ficam centralizadas em um arquivo próprio, onde vou implementando as soluções conforme resolvo cada questão.
 ## Autora
 
-Sofia Guerra — Ciência da Computação, UFCG****
+Sofia Guerra — Ciência da Computação, UFCG
