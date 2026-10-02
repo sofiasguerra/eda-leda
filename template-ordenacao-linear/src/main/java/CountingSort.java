@@ -5,15 +5,51 @@ public class CountingSort {
     * criar métodos auxiliares se precisar.
     */
     public int[] classicCountingSort(int[] a, int k) {
-       return null;
+       
+       //Frequencia
+        int[] c = new int[k];
+       for(int i = 0; i < a.length; i++){
+            c[a[i]-1]++;
+       }
+
+       //Cumulativa
+       for(int i = 1; i < c.length; i++){
+            c[i] += c[i-1];
+       }
+
+       //Ordenação
+       int[] b = new int[a.length];
+       for(int i = b.length-1; i >= 0; i--){
+            b[c[a[i]-1]-1] = a[i];
+            c[a[i]-1]--;
+       }
+
+       return b;
     }
 
     /**
     * Implemente uma versão do counting sort que aceita valor 0 na coleção original.
     */
     public int[] zeroCountingSort(int[] v, int k) {
-        // TODO implementar
-        return null;
+        //Frequencia
+        int[] c = new int[k+1];
+        for(int i = 0; i < v.length; i++){
+            c[v[i]]++;
+        }
+
+        //Cumulativa
+        for(int i = 1; i < c.length; i++){
+            c[i] += c[i-1];
+        }
+
+        //Ordenação
+        int[] b = new int[v.length];
+        for(int i = v.length-1; i >= 0; i--){
+            b[c[v[i]]-1] = v[i];
+            c[v[i]]--;
+        }
+        
+        return b;
     }
 
     /**
@@ -21,8 +57,33 @@ public class CountingSort {
     * vai precisar identificar o menor elemento do array. FAça isso no início do método.
     */
     public int[] negativosCountingSort(int[] v, int k) {
-        // TODO implementar
-        return null;
+        int menor = menorNum(v);
+        int min = Math.abs(menor);
+        int[] c = new int[k+min+1];
+        
+        for(int i = 0; i < v.length; i++){
+            c[v[i]+min]++;
+        }
+
+        for(int i = 1; i < c.length; i++){
+            c[i] += c[i-1];
+        }
+
+        int[] b = new int[v.length];
+        for(int i = b.length-1; i >= 0; i--){
+            b[c[v[i]+min]-1] = v[i];
+            c[v[i]+min]--;
+        }
+
+        return b;
     }
 
+    private int menorNum(int[] arr){
+        int menor = 0;
+        for(int i = 0; i < arr.length; i++){
+            if(menor > arr[i])
+                menor = arr[i];
+        }
+        return menor;
+    }
 }
