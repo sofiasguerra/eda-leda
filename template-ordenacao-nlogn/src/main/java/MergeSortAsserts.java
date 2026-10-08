@@ -4,7 +4,11 @@ public class MergeSortAsserts {
 
     public static void main(String[] args) {
         MergeSortAsserts m = new MergeSortAsserts();
-
+         m.testMergeOrdenadosCrescente();
+        m.testMergeOrdenadosDecrescente();
+        m.testMergeOrdenadosDistintos();
+        m.testSort();
+        System.out.println("\ntodos os testes passaram!");
     }
 
     public void testMergeOrdenadosCrescente(){
@@ -16,11 +20,11 @@ public class MergeSortAsserts {
         a = new int[]{20, 32, 33, 45, 99};
         b = new int[]{1, 23, 24, 32, 36, 48, 98, 100};
         resulEsperado = new int[]{1, 20, 23, 24, 32, 32, 33, 36, 45, 48, 98, 99, 100};
-        assert merg.mergeOrdenadosCrescente(a, b) == resulEsperado;
+        assert Arrays.equals(merg.mergeOrdenadosCrescente(a, b), resulEsperado);
 
         a = new int[]{1};
         b = new int[]{2};
-        assert merg.mergeOrdenadosCrescente(a, b) == new int[]{1, 2};
+        assert Arrays.equals(merg.mergeOrdenadosCrescente(a, b), new int[]{1, 2});
     }
 
     public void testMergeOrdenadosDecrescente(){
@@ -30,11 +34,11 @@ public class MergeSortAsserts {
 
         a = new int[]{9, 6, 4, 2, -2, -5, -10};
         b = new int[]{5, 3, 1, 0, -1, -6};
-        assert Arrays.equals(merg.mergeOrdenadosDecrescente(a, b), new int[]{0,1,2,3,4,5,6,7,8,9});
+        assert Arrays.equals(merg.mergeOrdenadosDecrescente(a, b), new int[]{-10, -6, -5, -2, -1, 0, 1, 2, 3, 4, 5, 6, 9});
 
         a = new int[]{1};
         b = new int[]{2};
-        assert merg.mergeOrdenadosDecrescente(a, b) == new int[]{1, 2};
+        assert Arrays.equals(merg.mergeOrdenadosDecrescente(a, b), new int[]{1, 2});
     }
 
     public void testMergeOrdenadosDistintos(){
@@ -48,7 +52,7 @@ public class MergeSortAsserts {
 
         a = new int[]{1};
         b = new int[]{2};
-        assert merg.mergeOrdenadosDistintos(a, b) == new int[]{1, 2};
+        assert Arrays.equals(merg.mergeOrdenadosDistintos(a, b), new int[]{1, 2});
     }
 
     public void testSort(){
@@ -70,6 +74,30 @@ public class MergeSortAsserts {
         v = new int[]{10, 2, 3, 4};
         merg.sort(v, 0, v.length - 1);
         assert Arrays.equals(v, new int[]{2, 3, 4, 10});
+
+         v = new int[]{2, 1};
+        merg.sort(v, 0, v.length - 1);
+        assert Arrays.equals(v, new int[]{1, 2});
+
+    // dois elementos, já ordenados
+        v = new int[]{1, 2};
+        merg.sort(v, 0, v.length - 1);
+        assert Arrays.equals(v, new int[]{1, 2});
+
+    // três elementos invertidos (tamanho ímpar)
+        v = new int[]{3, 2, 1};
+        merg.sort(v, 0, v.length - 1);
+        assert Arrays.equals(v, new int[]{1, 2, 3});
+
+    // totalmente invertido, tamanho par
+        v = new int[]{5, 4, 3, 2, 1, 0};
+        merg.sort(v, 0, v.length - 1);
+        assert Arrays.equals(v, new int[]{0, 1, 2, 3, 4, 5});
+
+    // já ordenado
+        v = new int[]{1, 2, 3, 4, 5};
+        merg.sort(v, 0, v.length - 1);
+        assert Arrays.equals(v, new int[]{1, 2, 3, 4, 5});
     }
 }
  

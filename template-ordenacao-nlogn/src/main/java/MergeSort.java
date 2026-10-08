@@ -16,8 +16,8 @@ public class MergeSort implements SortingStrategy {
         }
 
         int k = 0, iA = 0, iB = 0;
-        for(int i = 0; i < menor; i++){
-            if(a[iA] < b[iB]){
+        while(iA < a.length && iB < b.length){
+            if(a[iA] <= b[iB]){
                 arr[k++] = a[iA++];
             } else {
                 arr[k++] = b[iB++];
@@ -28,7 +28,7 @@ public class MergeSort implements SortingStrategy {
             arr[k++] = a[iA++];
         }
 
-        while(iB < a.length){
+        while(iB < b.length){
             arr[k++] = b[iB++];
         }
         return arr;
@@ -96,18 +96,18 @@ public class MergeSort implements SortingStrategy {
     }
 
     private void merge(int[] v, int ini, int fim){
-        int tamDireitaHelper = fim - ini;
-        int[] helper = new int[tamDireitaHelper+1];
-        for(int i = 0; i < tamDireitaHelper; i++){
+        int tam = fim - ini;
+        int[] helper = new int[tam+1];
+        for(int i = 0; i <= tam; i++){
             helper[i] = v[ini + i];
         }
 
-        int middleHelper = (ini+fim)/2;
-        int i = ini;
+        int middleHelper = tam/2;
+        int i = 0;
         int j = middleHelper+1;
         int k = ini;
-        while(ini <= middleHelper && j < fim){
-            if(helper[i] < helper[j]){
+        while(i <= middleHelper && j <= tam){
+            if(helper[i] <= helper[j]){
                 v[k++] = helper[i++];
             } else{
                 v[k++] = helper[j++];
