@@ -54,5 +54,7 @@ public class CountingSortAsserts {
         new CountingSortAsserts().classicCountingSort();
         new CountingSortAsserts().zeroCountingSort();
         new CountingSortAsserts().negativosCountingSort();
+
+        System.out.println("\nPassou em todos os testes!");
     }
 }

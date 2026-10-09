@@ -14,7 +14,7 @@ public class InsertionSort implements SortingStrategy {
     public void insereUltimoOrdenado(int[] v) {
         int i = v.length-1;
         while(i > 0 && v[i] < v[i-1]){
-            swap(v, i-1, i);
+            swap(v, i, i-1);
             i--;
         }
     }
@@ -26,24 +26,26 @@ public class InsertionSort implements SortingStrategy {
     * Importante: seu algoritmo deve ser O(n);
     */
     public void inserePrimeiroOrdenado(int[] v) {
-        int i = 0;
-        while(i < v.length-1 && v[i] > v[i+1]){
-            swap(v, i, i+1);
-            i++;
-        }
+       int i = 0;
+       while (i < v.length-1 && v[i] > v[i+1]){
+        swap(v, i, i+1);
+        i++;
+       }
+        
     }
 
     /**
     * Ordena um array de inteiros utilizando o insertion sort.
     */
     public void sort(int[] v) {
-        for(int i = 1; i < v.length; i++){
-            int j = i;
-            while(j > 0 && v[j-1] > v[j]){
-                swap(v, j-1, j);
-                j--;
-            }
+       for(int i = 1; i < v.length; i++){
+
+        int j = i;
+        while (j > 0 && v[j] < v[j-1]){
+            swap(v, j, j-1);
+            j--;
         }
+       }
     }
 
     /**

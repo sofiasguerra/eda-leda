@@ -18,10 +18,14 @@ public class RadixSortAsserts {
 
         v = new int[]{1111, 1111, 1111, 2222, 2222 ,2222};
         assert Arrays.equals(sorting.radixSort(v), new int[]{1111, 1111, 1111, 2222, 2222, 2222});
+
+        v = new int[]{123, 321, 456, 321, 985, 896, 122};
+        assert Arrays.equals(sorting.radixSort(v), new int[]{122, 123, 321, 321, 456, 896, 985});
     }
 
     public static void main(String[] args) {
         RadixSortAsserts t = new RadixSortAsserts();
         t.radixSort();
+        System.out.println("\n Passou em todos os testes!");
     }
 }

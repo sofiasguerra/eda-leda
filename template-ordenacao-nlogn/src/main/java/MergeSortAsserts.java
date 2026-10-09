@@ -4,7 +4,7 @@ public class MergeSortAsserts {
 
     public static void main(String[] args) {
         MergeSortAsserts m = new MergeSortAsserts();
-         m.testMergeOrdenadosCrescente();
+        m.testMergeOrdenadosCrescente();
         m.testMergeOrdenadosDecrescente();
         m.testMergeOrdenadosDistintos();
         m.testSort();

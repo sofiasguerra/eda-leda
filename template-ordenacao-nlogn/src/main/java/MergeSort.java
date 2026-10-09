@@ -6,32 +6,22 @@ public class MergeSort implements SortingStrategy {
     * e retorna um novo array também ordenado em forma crescente.
     */
     public int[] mergeOrdenadosCrescente(int[] a, int[] b) {
-        int[] arr = new int[a.length + b.length];
-        
-        int menor = 0;
-        if(a.length < b.length){
-            menor = a.length;
-        } else{
-            menor = b.length;
-        }
+         int[] resp = new int[a.length + b.length];
+         int idxA = 0;
+         int idxB = 0;
+         int i = 0;
+        while(idxA < a.length && idxB < b.length){
+            if(a[idxA] <= b[idxB]) resp[i++] = a[idxA++];
+            else resp[i++] = b[idxB++];
+         }
 
-        int k = 0, iA = 0, iB = 0;
-        while(iA < a.length && iB < b.length){
-            if(a[iA] <= b[iB]){
-                arr[k++] = a[iA++];
-            } else {
-                arr[k++] = b[iB++];
-            }
-        }
+        while(idxA < a.length)
+            resp[i++] = a[idxA++];
 
-        while(iA < a.length){
-            arr[k++] = a[iA++];
-        }
+        while(idxB < b.length)
+            resp[i++] = b[idxB++];
 
-        while(iB < b.length){
-            arr[k++] = b[iB++];
-        }
-        return arr;
+        return resp;
     }
     
     /**
@@ -39,23 +29,22 @@ public class MergeSort implements SortingStrategy {
     * e retorna um novo array ordenado em forma crescente.
     */
     public int[] mergeOrdenadosDecrescente(int[] a, int[] b) {
-       int[] arr = new int[a.length + b.length];
+        int[] resp = new int[a.length + b.length];
+        int iA = a.length-1;
+        int iB = b.length-1;
+        int i = 0;
+        while(iA >= 0 && iB >= 0){
+            if(a[iA] <= b[iB]) resp[i++] = a[iA--];
+            else resp[i++] = b[iB--];
+        }
 
-       int k = 0, iA = a.length-1, iB = b.length-1;
-       while(iA >= 0 && iB >= 0){
-        if(a[iA] < b[iB])
-            arr[k++] = a[iA--];
-        else 
-            arr[k++] = b[iB--];
-       }
+        while(iA >= 0)
+            resp[i++] = a[iA--];
+        
+        while(iB >= 0)
+            resp[i++] = b[iB--];
 
-       while(iA >= 0)
-        arr[k++] = a[iA--];
-
-       while(iB >=0)
-        arr[k++] = b[iB--];
-
-    return arr;
+        return resp;
     }
    
     /**
@@ -63,23 +52,22 @@ public class MergeSort implements SortingStrategy {
     * em forma descrescente. Seu método deve retornar um array ordenado em forma crescente.
     */
     public int[] mergeOrdenadosDistintos(int[] a, int[] b) {
-       int[] arr = new int[a.length + b.length];
+        int[] resp = new int[a.length+b.length];
+        int iA = 0;
+        int iB = b.length-1;
+        int i = 0;
+        while(iA < a.length && iB >= 0){
+            if(a[iA] <= b[iB]) resp[i++] = a[iA++];
+            else resp[i++] = b[iB--];
+        }
 
-       int k = 0, iA = 0, iB = b.length-1;
-       while(iA < a.length && iB >= 0){
-        if(a[iA] < b[iB])
-            arr[k++] = a[iA++];
-        else 
-            arr[k++] = b[iB--];
-       }
+        while(iA < a.length)
+            resp[i++] = a[iA++];
 
-       while(iA < a.length)
-        arr[k++] = a[iA++];
+        while(iB >= 0)
+            resp[i++] = b[iB--];
 
-       while(iB >=0)
-        arr[k++] = b[iB--];
-
-    return arr;
+        return resp;
     }
    
     /**
@@ -87,35 +75,30 @@ public class MergeSort implements SortingStrategy {
     * criar métodos auxiliares se precisar.
     */
     public void sort(int[] v, int ini, int fim) {
-        if (ini < fim){
-            int meio = (ini + fim)/2;
-            sort(v, ini, meio);
-            sort(v, meio +1, fim);
-            merge(v, ini, fim);
-        }
+        if(ini >= fim) return;
+        int meio = (ini+fim)/2;
+        sort(v, ini, meio);
+        sort(v, meio+1, fim);
+        merge(v, ini, fim);
     }
 
     private void merge(int[] v, int ini, int fim){
-        int tam = fim - ini;
-        int[] helper = new int[tam+1];
-        for(int i = 0; i <= tam; i++){
-            helper[i] = v[ini + i];
+        int idxFimHelper = fim-ini;
+        int[] helper = new int[idxFimHelper+1];
+        for(int x = 0; x < helper.length; x++){
+            helper[x] = v[x+ini];
         }
 
-        int middleHelper = tam/2;
+        int meioHelper = idxFimHelper/2;
         int i = 0;
-        int j = middleHelper+1;
+        int j = meioHelper+1;
         int k = ini;
-        while(i <= middleHelper && j <= tam){
-            if(helper[i] <= helper[j]){
-                v[k++] = helper[i++];
-            } else{
-                v[k++] = helper[j++];
-            }
+        while(i <= meioHelper && j <= idxFimHelper){
+            if(helper[i] <= helper[j]) v[k++] = helper[i++];
+            else v[k++] = helper[j++];
         }
-
-        while(i <= middleHelper){
+        while(i <= meioHelper)
             v[k++] = helper[i++];
-        }
     }
 }
+       

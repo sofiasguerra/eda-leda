@@ -3,67 +3,66 @@ import java.util.Arrays;
 public class QuickSortAsserts {
 
     public static void main(String[] args) {
-        QuickSortAsserts t = new QuickSortAsserts();
-        t.testMediana();
-        t.testSort();
-        t.testMedianaDeTres();
+      QuickSortAsserts q = new QuickSortAsserts();
+        q.testMediana();
+        q.testMedianaDeTres();
+        q.testSort();
+
+        System.out.println("\n todos os testes passaram!");
     }
 
-    public void testMediana() {
-        QuickSort sorting = new QuickSort(); 
-        int[] v;
+    public void testMediana(){
+        QuickSort qs = new QuickSort();
+        int[] a;
 
-        v = new int[]{1};
-        assert sorting.mediana(v) == 1;
+        a = new int[]{5, 1, 2, 4, 3};
+        assert qs.mediana(a) == 3;
 
-        v = new int[]{1, 1, 1};
-        assert sorting.mediana(v) == 1;
+        a = new int[]{-1, 0, 5, 2, 1, 9, -3}; 
+        assert qs.mediana(a) == 1;
 
-        v = new int[]{5,1,4,3,2,6,7};
-        assert sorting.mediana(v) == 4;
+        a = new int[]{5, 6, 2}; 
+        assert qs.mediana(a) == 5;
 
-        v = new int[]{5,1,4,3,2,6,7,11,9,8,10};
-        assert sorting.mediana(v) == 6;
-
-        v = new int[]{8, 1, 78, 45, 3, 2, 103};
-        assert sorting.mediana(v) == 8;
+        a = new int[]{2}; 
+        assert qs.mediana(a) == 2;
     }
 
-    public void testSort() {
-        QuickSort sorting = new QuickSort(); 
-        int[] v;
+    public void testMedianaDeTres(){
+        QuickSort qs = new QuickSort();
+        int[] a;
 
-        v = new int[]{8, 1, 78, 45, 3, 2, 103};
-        sorting.sort(v, 0, v.length - 1);
-        assert Arrays.equals(v, new int[]{1, 2, 3, 8, 45, 78, 103});
+        a = new int[]{5, 1, 2, 4, 3, 10};
+        assert qs.medianaDeTres(a) == 5;
 
-        v = new int[]{2};
-        sorting.sort(v, 0, v.length - 1);
-        assert Arrays.equals(v, new int[]{2});
+        a = new int[]{-1, 0, 5, 2, 1, 9, -3}; 
+        assert qs.medianaDeTres(a) == -1;
 
-        v = new int[]{1, 2, 3, -4};
-        sorting.sort(v, 0, v.length - 1);
-        assert Arrays.equals(v, new int[]{-4, 1, 2, 3});
+        a = new int[]{5, 6, 2}; 
+        assert qs.medianaDeTres(a) == 5;
 
-        v = new int[]{10, 2, 3, 4};
-        sorting.sort(v, 0, v.length - 1);
-        assert Arrays.equals(v, new int[]{2, 3, 4, 10});
-    }	
+        a = new int[]{2}; 
+        assert qs.medianaDeTres(a) == 2;
+    }
 
-    public void testMedianaDeTres() {
-        QuickSort sorting = new QuickSort(); 
-        int[] v;
+    public void testSort(){
+        QuickSort qs = new QuickSort();
+        int[] a;
 
-        v = new int[]{1, 2, 3, 4, 5};
-        assert sorting.medianaDeTres(v) == 3;
+        a = new int[]{5, 1, 2, 4, 3, 10};
+        qs.sort(a, 0, a.length-1);
+        assert Arrays.equals(a, new int[]{1,2,3,4,5,10});
 
-        v = new int[]{4, 8, 10, 12};
-        assert sorting.medianaDeTres(v) == 8;
+        a = new int[]{9,8,7,6,5,4,3,2,1,0};
+        qs.sort(a, 0, a.length-1);
+        assert Arrays.equals(a, new int[]{0,1,2,3,4,5,6,7,8,9});
 
-        v = new int[]{40, 8, 10, 12, 12};
-        assert sorting.medianaDeTres(v) == 12;
+        a = new int[]{5,2,1,9,-10,-7,63};
+        qs.sort(a, 0, a.length-1);
+        assert Arrays.equals(a, new int[]{-10,-7,1,2,5,9,63});
 
-        v = new int[]{12, 8, 40, 12, 10};
-        assert sorting.medianaDeTres(v) == 12;
+        a = new int[]{1};
+        qs.sort(a, 0, a.length-1);
+        assert Arrays.equals(a, new int[]{1});
     }
 }

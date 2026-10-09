@@ -9,16 +9,16 @@ public class SelectionSort implements SortingStrategy {
     * Ordena um array de inteiros utilizando o selection sort.
     */
     public void sort(int[]v){
-        for(int i = 0; i < v.length; i ++){
+        for(int i = 0; i < v.length; i++){
+           
             int iMenor = i;
-            for(int j = i + 1; j < v.length; j++){
-                if(v[iMenor] > v[j]){
-                    iMenor = j;
-                }
-            }
-            swap(v, iMenor, i);
+            for(int j = i+1; j < v.length; j++)
+                if(v[j] < v[iMenor]) iMenor = j;
+        
+            swap(v, i, iMenor);
         }
     }
+
     /**  public void sort(int[] v) {
         for(int i = 0; i < v.length; i++){
             int iMenor = i;

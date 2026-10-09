@@ -23,7 +23,7 @@ class RadixTresDigitos {
 
     private static void count(int[] a, int d){
         //Contagem
-        int[] c = new int[999];
+        int[] c = new int[1000];
         int fator = (int) Math.pow(10, d-3);
         int dig;
         for(int i = 0; i < a.length; i++){

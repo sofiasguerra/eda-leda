@@ -1,38 +1,41 @@
+import java.util.*;
+
 public class RadixSort {
 
 	// Você pode assumir que todos os valores possuem a mesma quantidade de dígitos
 	// Caso precise do counting sort, use o que você já implementou na outra classe.
 	public int[] radixSort(int[] v) {
-		int nDig = ("" + v[0]).length();
-		for(int i = 1; i <= nDig; i++){
+		 int dig = ("" + v[0]).length();
+		
+		for(int i = 1;  i <= dig; i++){
 			counting(v, i);
 		}
-
 		return v;
 	}
 
-	public void counting(int[] v, int i){
+	public void counting(int[] a, int d){
 		int[] c = new int[10];
-		int div = (int) Math.pow(10, i-1);
-		int dig;
-		for(int j = 0; j < v.length; j++){
-			dig = (v[j]/div) % 10;
-			c[dig]++;
+		int exp = (int) Math.pow(10, d-1);
+		int digito;
+		for(int i = 0; i < a.length; i++){
+			digito = (a[i]/exp) % 10;
+			c[digito]++;
 		}
-
-		for(int j = 1; j < c.length; j++){
-			c[j] += c[j-1];
+		
+		for(int i = 1; i < c.length; i++){
+			c[i] += c[i-1];
 		}
-
-		int[] b = new int[v.length];
-		for(int j = b.length-1; j >= 0; j--){
-			dig = (v[j]/div) % 10;
-			b[c[dig]-1] = v[j];
-			c[dig]--;
+	
+		int[] b = new int[a.length];
+		for(int i = a.length-1; i >= 0; i--){
+			digito = (a[i]/exp) % 10;
+			b[c[digito]-1] = a[i];
+			c[digito]--;
 		}
-
-		for(int j = 0; j < b.length; j++){
-			v[j] = b[j];
+		
+		//Copia os el de B pra A;
+		for(int i = 0; i < a.length; i++){
+			a[i] = b[i];
 		}
 	}
 

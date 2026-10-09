@@ -1,17 +1,13 @@
-import java.util.Arrays;
-
 public class QuickSort implements SortingStrategy {
-
   
     /*
        A mediana de uma sequência de tamanho ímpar é o valor que divide uma sequência ao meio, isto é, 
-       metado dos valores são menores que ela, enquanto metade são maiores. Implemente o método abaixo
+       metade dos valores são menores que ela, enquanto metade são maiores. Implemente o método abaixo
        que recebe uma sequência de tamanho ímpar e retorna a mediana dessa sequência.
     */
     public int mediana(int[] v) {
-        Arrays.sort(v);
-        int meio = v.length/2;
-        return v[meio];
+      sort(v, 0, v.length-1);
+      return v[v.length/2];
     }
 
     /**
@@ -19,65 +15,37 @@ public class QuickSort implements SortingStrategy {
     * neste material: https://joaoarthurbm.github.io/eda/posts/particionamento-hoare/
     */
     public void sort(int[] v, int ini, int fim) {
-        if (ini < fim){
-            int idxPivot = partitionHoare(v, ini, fim); 
-            sort(v, ini, idxPivot-1);
-            sort(v, idxPivot+1, fim);
-        }
+        if(ini >= fim) return;
+        int idxPivot = particionamento(v, ini, fim);
+        sort(v, ini, idxPivot-1);
+        sort(v, idxPivot+1, fim);
     }
-
-    private int partitionHoare(int[] v, int ini, int fim) {
-        int idxMediana = medianaDeTresPartition(v, ini, fim);
-        swap(v, ini, idxMediana);
+    
+    private int particionamento(int[] v, int ini, int fim){
         int pivot = v[ini];
-        int i = ini+1;
+        int i = ini;
         int j = fim;
         while(i <= j){
 
-            while(i<=j && v[i] <= pivot){
+            // enquanto o i for menor ou igual ao pivot, ando com o i;
+            while(i <= j && v[i] <= pivot)
                 i++;
-        }
-            while(i<=j && v[j] > pivot){
+
+            // enquanto o j for maior que o pivot, volto com o j;
+            while(j >= i && v[j] > pivot)
                 j--;
-            }
 
-            if(i<j){
-                swap(v, i, j);
-            }
+            // se i NAO ENCONTROU j, troca;
+            if(i < j) swap(v, i, j);
         }
-
         swap(v, ini, j);
         return j;
     }
 
-    private int partitionLomuto(int[] v, int ini, int fim){
-        int idxMediana = medianaDeTresPartition(v, ini, fim);
-        swap(v, ini, idxMediana);
-        int pivot = v[ini];
-        int i = ini;
-        for(int j = ini+1; j <= fim; j++){
-            if(v[j] <= pivot){
-                swap(v, ++i, j);
-            }
-        }
-        swap(v, ini, i);
-        return i;
-    }
-
-    private void swap(int[] v, int i, int j) {
+    private void swap(int[] v, int i, int j){
         int aux = v[i];
         v[i] = v[j];
         v[j] = aux;
-    }
-        
-    public int medianaDeTresPartition(int[] v, int ini, int fim) {
-        int meio = (ini+fim)/2;
-        int[] arr = {v[ini], v[meio], v[fim]};
-        Arrays.sort(arr);
-
-        if(arr[1] == v[ini]) return ini;
-        else if(arr[1] == v[meio]) return meio;
-        return fim;
     }
 
     /**
@@ -91,10 +59,10 @@ public class QuickSort implements SortingStrategy {
     * Interprete os testes para saber qual valor usar como elemento central para calcular a mediana de três.
     */
     public int medianaDeTres(int[] v){
-        int meio = (v.length-1)/2;
-        int[] arr = {v[0], v[meio], v[v.length-1]};
-        Arrays.sort(arr);
+        int p = v[0], m = v[v.length/2], u = v[v.length-1];
 
-        return arr[1];
+       if((u <= p && p <= m) || (m <= p && p <= u)) return p;
+       else if((u <= m && m <= p) || (p <= m && m <= u)) return m;
+       return u;
     }
 }
