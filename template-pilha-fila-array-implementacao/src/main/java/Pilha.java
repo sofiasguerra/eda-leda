@@ -84,13 +84,17 @@ public class Pilha {
     public int lastIndexOf(int valor){
         Pilha aux = new Pilha(this.size());
         int idx = -1;
+        int retirados = 0;
+        int tamanho = this.size();
 
         while(!this.isEmpty()){
-            int indice = this.size()-1;
             int k = this.pop();
-            if(k == valor) idx = indice;
             aux.push(k);
-            break;
+            if(k == valor) {
+                idx = tamanho - retirados -1;
+                break;
+            }
+            retirados++;
         }
         while(!aux.isEmpty()){
             this.push(aux.pop());

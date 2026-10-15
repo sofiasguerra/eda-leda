@@ -148,6 +148,8 @@ public class AssertsPilha {
         pilha.pop();
         pilha.push(30);
         assert pilha.lastIndexOf(30) == 4;
+        System.out.println(pilha.toString());
+        System.out.println(pilha.lastIndexOf(30));
         assert pilha.indexOf(30) == 2;
     }
 
