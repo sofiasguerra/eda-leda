@@ -69,33 +69,36 @@ public class Pilha {
     public int indexOf(int valor) {
         Pilha aux = new Pilha(this.size());
         int idx = -1;
+
         while(!this.isEmpty()){
-            aux.push(this.pop());
-        }
-        while(!aux.isEmpty()){
-            int k = aux.pop();
-            this.push(k);
-            if(k == valor) idx = this.size()-1;
+            int i = this.size()-1;
+            int k = this.pop();
+            if(k == valor){
+                idx = i;
+            }
+            aux.push(k);
         }
 
+        while(!aux.isEmpty()){
+            this.push(aux.pop());
+        }
         return idx;
     }
 
     public int lastIndexOf(int valor){
         Pilha aux = new Pilha(this.size());
         int idx = -1;
-        int retirados = 0;
-        int tamanho = this.size();
 
         while(!this.isEmpty()){
+            int i = this.size()-1;
             int k = this.pop();
             aux.push(k);
-            if(k == valor) {
-                idx = tamanho - retirados -1;
+            if(k == valor){
+                idx = i;
                 break;
             }
-            retirados++;
         }
+
         while(!aux.isEmpty()){
             this.push(aux.pop());
         }

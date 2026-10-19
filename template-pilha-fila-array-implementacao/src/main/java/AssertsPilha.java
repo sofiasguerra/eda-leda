@@ -122,11 +122,11 @@ public class AssertsPilha {
     public void testPilhaIndexOf() {
         Pilha pilha = new Pilha(5);
         assert pilha.indexOf(10) == -1;
-        pilha.push(10);
-        assert pilha.indexOf(10) == 0;
+        pilha.push(1);
+        assert pilha.indexOf(1) == 0;
         pilha.push(20);
         assert pilha.indexOf(20) == 1;
-        assert pilha.indexOf(10) == 0;
+        assert pilha.indexOf(1) == 0;
 
         pilha.push(30);
         pilha.push(10);
@@ -148,8 +148,6 @@ public class AssertsPilha {
         pilha.pop();
         pilha.push(30);
         assert pilha.lastIndexOf(30) == 4;
-        System.out.println(pilha.toString());
-        System.out.println(pilha.lastIndexOf(30));
         assert pilha.indexOf(30) == 2;
     }
 
@@ -160,6 +158,6 @@ public class AssertsPilha {
         testes.testPilhaToString();
         testes.testPilhaIndexOf();
         testes.testPilhaLastIndexOf();
-        System.out.println("Todos os testes de AssertsPilha passaram.");
+        System.out.println("\nTodos os testes de AssertsPilha passaram.");
     }
 }

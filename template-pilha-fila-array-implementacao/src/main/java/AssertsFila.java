@@ -136,7 +136,17 @@ public class AssertsFila {
 
         fila.addLast(30);
         fila.addLast(10);
-        assert fila.indexOf(10) == 0;
+        fila.removeFirst();
+        assert fila.indexOf(10) == 2;
+        
+        Fila fila2 = new Fila(5);
+        fila2.addLast(10);
+        fila2.addLast(20);
+        fila2.addLast(30);
+        fila2.removeFirst();
+
+        assert fila2.indexOf(20) == 0;
+        assert fila2.indexOf(30) == 1;
     }
 
     public void testFilaLastIndexOf() {
@@ -165,6 +175,6 @@ public class AssertsFila {
         testes.testFilaToString();
         testes.testFilaIndexOf();
         testes.testFilaLastIndexOf();
-        System.out.println("Todos os testes de AssertsFila passaram.");
+        System.out.println("\nTodos os testes de AssertsFila passaram.");
     }
 }
