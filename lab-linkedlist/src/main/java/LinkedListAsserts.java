@@ -418,6 +418,415 @@ public class LinkedListAsserts {
         assert ll.size() == 6;
     }
 
+    public void testMoveToHead() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+        ll.moveToHead(2);
+        assert ll.toString().equals("3, 1, 2, 4, 5");
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+
+        ll.moveToHead(0);
+        assert ll.toString().equals("1, 2, 3, 4, 5");
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+        ll.moveToHead(4);
+        assert ll.toString().equals("5, 1, 2, 3, 4");
+        assert ll.getLast() == 4;
+
+        ll = new LinkedList();
+        ll.addLast(7);
+        ll.moveToHead(0);
+        assert ll.toString().equals("7");
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.moveToHead(1);
+        assert ll.toString().equals("2, 1");
+    }
+
+    public void testInsereOrdenado() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(2);
+        ll.addLast(4);
+        ll.addLast(6);
+        ll.insereOrdenado(5);
+        assert ll.toString().equals("2, 4, 5, 6");
+
+        ll = new LinkedList();
+        ll.addLast(2);
+        ll.addLast(4);
+        ll.addLast(6);
+
+        ll.insereOrdenado(1);
+        assert ll.toString().equals("1, 2, 4, 6");
+
+        ll = new LinkedList();
+        ll.addLast(2);
+        ll.addLast(4);
+        ll.addLast(6);
+
+        ll.insereOrdenado(10);
+        assert ll.toString().equals("2, 4, 6, 10");
+
+        ll = new LinkedList();
+        ll.insereOrdenado(5);
+        assert ll.toString().equals("5");
+
+        ll = new LinkedList();
+        ll.addLast(5);
+        ll.insereOrdenado(3);
+        assert ll.toString().equals("3, 5");
+
+        ll = new LinkedList();
+        ll.addLast(5);
+        ll.insereOrdenado(7);
+        assert ll.toString().equals("5, 7");
+
+        // com repetidos: v deve ser inserido depois dos elementos iguais a ele
+        ll = new LinkedList();
+        ll.addLast(2);
+        ll.addLast(4);
+        ll.addLast(4);
+        ll.addLast(6);
+
+        ll.insereOrdenado(4);
+        assert ll.toString().equals("2, 4, 4, 4, 6");
+    }
+
+    public void testSwap() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+
+        Node n1 = ll.getNode(1);
+        Node n2 = ll.getNode(3);
+        ll.swap(n1, n2);
+
+        assert ll.toString().equals("1, 4, 3, 2, 5");
+        // confirma que foram as referências que se moveram, não os valores
+        assert ll.getNode(1) == n2;
+        assert ll.getNode(3) == n1;
+
+        // nós adjacentes
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+
+        n1 = ll.getNode(1);
+        n2 = ll.getNode(2);
+        ll.swap(n1, n2);
+        assert ll.toString().equals("1, 3, 2, 4, 5");
+        assert ll.getNode(1) == n2;
+        assert ll.getNode(2) == n1;
+
+        // head e tail
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+
+        n1 = ll.getNode(0);
+        n2 = ll.getNode(4);
+        ll.swap(n1, n2);
+
+        assert ll.toString().equals("5, 2, 3, 4, 1");
+        assert ll.getFirst() == 5;
+        assert ll.getLast() == 1;
+        assert ll.getNode(0) == n2;
+        assert ll.getNode(4) == n1;
+
+        // lista de dois elementos
+        ll = new LinkedList();
+        ll.addLast(10);
+        ll.addLast(20);
+
+        n1 = ll.getNode(0);
+        n2 = ll.getNode(1);
+        ll.swap(n1, n2);
+
+        assert ll.toString().equals("20, 10");
+    }
+
+    public void testInverte() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+
+        ll.inverte();
+        assert ll.toString().equals("5, 4, 3, 2, 1");
+        assert ll.getFirst() == 5;
+        assert ll.getLast() == 1;
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.inverte();
+        assert ll.toString().equals("2, 1");
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.inverte();
+        assert ll.toString().equals("1");
+
+        ll = new LinkedList();
+        ll.inverte();
+        assert ll.isEmpty();
+        assert ll.toString().equals("");
+    }
+
+    public void testToStringReverso() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+        assert ll.toStringReverso().equals("5, 4, 3, 2, 1");
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        assert ll.toStringReverso().equals("2, 1");
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        assert ll.toStringReverso().equals("1");
+
+        ll = new LinkedList();
+        assert ll.toStringReverso().equals("");
+    }
+
+    public void testRemoveAll() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(2);
+        ll.addLast(4);
+        ll.addLast(2);
+
+        assert ll.removeAll(2) == 3;
+        assert ll.toString().equals("1, 3, 4");
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+
+        assert ll.removeAll(5) == 0;
+        assert ll.toString().equals("1, 2, 3");
+
+        ll = new LinkedList();
+        ll.addLast(2);
+        ll.addLast(2);
+        ll.addLast(2);
+
+        assert ll.removeAll(2) == 3;
+        assert ll.isEmpty();
+
+        ll = new LinkedList();
+        ll.addLast(1);
+
+        assert ll.removeAll(1) == 1;
+        assert ll.isEmpty();
+    }
+
+    public void testToArray() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+
+        assert java.util.Arrays.equals(ll.toArray(), new int[]{1, 2, 3, 4, 5});
+
+        ll = new LinkedList();
+        assert java.util.Arrays.equals(ll.toArray(), new int[]{});
+
+        ll = new LinkedList();
+        ll.addLast(7);
+        assert java.util.Arrays.equals(ll.toArray(), new int[]{7});
+    }
+
+    public void testMeio() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+
+        assert ll.meio() == 3;
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+
+        assert ll.meio() == 3;
+
+        ll = new LinkedList();
+        ll.addLast(9);
+        assert ll.meio() == 9;
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        assert ll.meio() == 2;
+    }
+
+    public void testIsPalindromo() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(2);
+        ll.addLast(1);
+        assert ll.isPalindromo();
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+        assert !ll.isPalindromo();
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(1);
+        assert ll.isPalindromo();
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        assert !ll.isPalindromo();
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        assert ll.isPalindromo();
+
+        ll = new LinkedList();
+        assert ll.isPalindromo();
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(1);
+        ll.addLast(2);
+        assert !ll.isPalindromo();
+    }
+
+    public void testRemoveLastOccurrence() {
+        LinkedList ll = new LinkedList();
+
+        assert !ll.removeLastOccurrence(5);
+
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(2);
+        ll.addLast(4);
+
+        assert ll.removeLastOccurrence(2);
+        assert ll.toString().equals("1, 2, 3, 4");
+
+        assert ll.removeLastOccurrence(2);
+        assert ll.toString().equals("1, 3, 4");
+
+        assert !ll.removeLastOccurrence(2);
+        assert ll.toString().equals("1, 3, 4");
+
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(1);
+
+        assert ll.removeLastOccurrence(1);
+        assert ll.toString().equals("1, 2");
+        assert ll.getLast() == 2;
+
+        ll = new LinkedList();
+        ll.addLast(7);
+        assert ll.removeLastOccurrence(7);
+        assert ll.isEmpty();
+    }
+
+    public void testFilter() {
+        LinkedList ll = new LinkedList();
+        ll.addLast(5);
+        ll.addLast(1);
+        ll.addLast(8);
+        ll.addLast(3);
+        ll.addLast(9);
+        ll.addLast(2);
+
+        ll.filter(4);
+        assert ll.toString().equals("5, 8, 9");
+        assert ll.size() == 3;
+
+        // valores iguais ao parâmetro também são removidos (só sobra o que é
+        // estritamente maior)
+        ll = new LinkedList();
+        ll.addLast(4);
+        ll.addLast(4);
+        ll.addLast(5);
+
+        ll.filter(4);
+        assert ll.toString().equals("5");
+
+        // nada é maior que o parâmetro: lista fica vazia
+        ll = new LinkedList();
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+
+        ll.filter(10);
+        assert ll.isEmpty();
+
+        // tudo já é maior: lista não muda
+        ll = new LinkedList();
+        ll.addLast(5);
+        ll.addLast(6);
+        ll.addLast(7);
+
+        ll.filter(1);
+        assert ll.toString().equals("5, 6, 7");
+
+        ll = new LinkedList();
+        ll.filter(3);
+        assert ll.isEmpty();
+    }
+
     public static void main(String[] args) {
         LinkedListAsserts tests = new LinkedListAsserts();
 
@@ -435,6 +844,17 @@ public class LinkedListAsserts {
         tests.testLLAddLast();
         tests.testListAddFirst();
         tests.testLinkedListAdd();
+        tests.testMoveToHead();
+        tests.testInsereOrdenado();
+        tests.testSwap();
+        tests.testInverte();
+        tests.testToStringReverso();
+        tests.testRemoveAll();
+        tests.testToArray();
+        tests.testMeio();
+        tests.testIsPalindromo();
+        tests.testRemoveLastOccurrence();
+        tests.testFilter();
     }
 
 }
