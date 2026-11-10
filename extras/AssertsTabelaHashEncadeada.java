@@ -1,4 +1,4 @@
-import util.Aluno;
+import util2.Aluno;
 public class AssertsTabelaHashEncadeada {
 
     public void testPut() {

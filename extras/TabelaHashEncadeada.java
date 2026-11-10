@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import util.Aluno;
+import util2.Aluno;
 
 /**
  * Esta classe representa a implementação de uma Tabela Hash que usa endereçamento fechado (encadeamento)
@@ -19,22 +19,24 @@ import util.Aluno;
  */
 public class TabelaHashEncadeada {
 
-    private ArrayList<Aluno>[] tabela;
+    private ArrayList<Aluno> tabela;
     private final int CAPACIDADE_DEFAULT = 23;
 
     /**
      * Cria uma nova tabela com a capacidade default 23.
      */
+    @SuppressWarnings("unchecked")
     public TabelaHashEncadeada() {
-        this.tabela = new ArrayList<Aluno>[CAPACIDADE_DEFAULT];
+        this.tabela = new ArrayList[CAPACIDADE_DEFAULT];
     }
     
     /**
      * Cria uma nova tabela com a capacidade passada como parâmetro.
      * @param capacidade O número de posições da tabela.
      */
+    @SuppressWarnings("unchecked")
     public TabelaHashEncadeada(int capacidade) {
-        this.tabela = new ArrayList<Aluno>[capacidade];
+        this.tabela = new ArrayList[capacidade];
     }
     
     /**
@@ -99,7 +101,7 @@ public class TabelaHashEncadeada {
     }
 
     public boolean containsValue(Aluno aluno) {
-        return this.get(aluno.getMatricula()).equals(aluno);
+        return aluno.equals(this.get(aluno.getMatricula()));
     }
 
     /**
