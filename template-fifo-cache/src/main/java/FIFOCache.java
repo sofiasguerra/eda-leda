@@ -54,6 +54,15 @@ public class FIFOCache {
         return removido;
     }
 
+    public boolean contains(String key){
+        int i = this.head;
+        for(int j = 0; j < this.size; j++){
+            if(key.equals(this.cache[i])) return true;
+            i = (i + 1) % this.cache.length;
+        }
+        return false;
+    }
+
     // deve lançar exceção caso a fila esteja vazia. apenas retorna o primeiro da fila, sem
     // remover;
     public String getFirst() {
@@ -69,8 +78,7 @@ public class FIFOCache {
     }
 
     // deve retornar uma string representando a fila. 
-    @Override 
-    public String toString() {
+    public String toString2() {
         StringJoiner out = new StringJoiner(", ");
         int count = 0;
         int i = this.head;
@@ -80,6 +88,18 @@ public class FIFOCache {
             count++;
         }
         return out.toString();
+    }
+ 
+    @Override 
+    public String toString(){
+        String out = "";
+        int i = this.head;
+        for(int j = 0; j < this.size; j++){
+            if(j == this.size-1) out += this.cache[i];
+            else out += this.cache[i] + ", ";
+            i = (i + 1) % this.cache.length;
+        }
+        return out;
     }
     
     public int size() {

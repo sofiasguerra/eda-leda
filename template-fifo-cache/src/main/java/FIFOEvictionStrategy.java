@@ -1,14 +1,10 @@
-import java.util.*;
-
 public class FIFOEvictionStrategy {
 
     private FIFOCache cache;
-    private HashSet<String> set;
 
     // deve ter uma FIFOCache como atributo
     public FIFOEvictionStrategy(int capacidade) {
         this.cache = new FIFOCache(capacidade);
-        this.set = new HashSet<>();
     }
 
     /*
@@ -18,11 +14,7 @@ public class FIFOEvictionStrategy {
     * objeto com a chave passada como parâmetro.
     **/
     public String get(String chave) {
-        if(this.set.contains(chave)) return "hit";
-        if(this.getNextEviction() != null){
-            this.set.remove(this.getNextEviction());
-        }
-        this.set.add(chave);
+        if(this.cache.contains(chave)) return "hit";
         this.cache.addLast(chave);
         return "miss";
     }
