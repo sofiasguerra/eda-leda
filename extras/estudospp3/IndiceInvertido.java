@@ -2,50 +2,31 @@ import java.util.*;
 
 public class IndiceInvertido {
 
-    private ArrayList<String>[] tabela;
-    private int size;
-    private static final int TAM_DEFAULT = 41; //nao me importarei com resize/ rehash;
+    private HashMap<String, ArrayList<String>> mapa;
 
     public IndiceInvertido() {
-        this(TAM_DEFAULT);
-    }
-
-    @SuppressWarnings("unchecked")
-    public IndiceInvertido(int capacidade){
-        this.tabela = new ArrayList[capacidade];
-    }
-
-    public int hash(String chave){
-        int h = chave.hashCode();
-        return Math.floorMod(h, this.tabela.length);
+        this.mapa = new HashMap<>();
     }
 
     public void addDocument(String docID, String content) {
-        String[] k = content.toLowerCase().split(" ");
-        for(String s : k){
-            this.put(s, docID.toLowerCase());
-        }
-    }
+        String[] keys = content.split(" ");
 
-    private void put(String chave, String valor){
-        int hash = hash(chave);
-        ArrayList<String> listTabela = this.tabela[hash];
-
-        if(listTabela == null){
-            this.tabela[hash] = new ArrayList<>();
-            this.tabela[hash].add(valor);
-        } else if(!listTabela.contains(valor)){
-            listTabela.add(valor);
+        for(String word : keys){
+            String lowerWord = word.toLowerCase();
+            ArrayList<String> listWord = mapa.get(lowerWord);
+            if(listWord == null){
+                listWord = new ArrayList<>();
+                listWord.add(docID);
+                mapa.put(lowerWord, listWord);
+            } else if(!listWord.contains(docID)){   //TRATAR A DUPLICADA!!!!!
+                listWord.add(docID);
+            }
         }
-        this.size++;
     }
 
     public List<String> search(String word) {
-        int hash = hash(word.toLowerCase());
-        ArrayList<String> listaTabela = this.tabela[hash];
-
-        if(listaTabela == null) return new ArrayList<>();
-        return listaTabela;
+        ArrayList lista = this.mapa.get(word.toLowerCase());
+        if(lista == null) return new ArrayList<>(); //lista vazia
+        return new ArrayList<>(lista);   //uma copia para nao dar acesso ao parametro interno
     }
-
 }

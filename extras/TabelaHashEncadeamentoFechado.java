@@ -50,21 +50,16 @@ public class TabelaHashEncadeamentoFechado {
             this.size++;
         } else {
 
-            boolean achou = false;
             for(int i = 0; i < alunosTabela.size(); i++){
                 Aluno aux = alunosTabela.get(i);
                 if(aux.getMatricula() == chave) {
                     alunosTabela.set(i, valor);
-                    achou = true;
-                    break;
+                    return;
                 }
             }
             
-            if(!achou){
-                alunosTabela.add(valor);
-                this.size++;
-            }   
-                
+            alunosTabela.add(valor);
+            this.size++;
         }
     }
 
