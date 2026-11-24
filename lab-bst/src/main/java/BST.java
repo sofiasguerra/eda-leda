@@ -14,40 +14,32 @@ public class BST {
      * @param element o valor a ser adicionado na árvore.
      */
     public void add(int element) {
-        this.size += 1;
-        if (isEmpty())
-            this.root = new Node(element);
-        else {
-            
+        Node newNode = new Node(element);
+
+        if(this.root == null){
+            this.root = newNode;
+        } else {
             Node aux = this.root;
-            
-            while (aux != null) {
-                
-                if (element < aux.value) {
-                    if (aux.left == null) { 
-                        Node newNode = new Node(element);
-                        aux.left = newNode;
-                        newNode.parent = aux;
-                        return;
-                    }
-                    
-                    aux = aux.left;
-                } else {
-                    if (aux.right == null) { 
-                        Node newNode = new Node(element);
+            while (true) { 
+                if(element > aux.value){
+                    if(aux.right == null){
                         aux.right = newNode;
-                        newNode.parent = aux;
-                        return;
-                    }
-                    
+                        break;
+                    } 
                     aux = aux.right;
-                }
+                } else {
+                    if(aux.left == null){
+                        aux.left = newNode;
+                        break;
+                    }
+                    aux = aux.left;
+                }   
             }
+            newNode.parent = aux;
         }
-        
+        this.size++;
     }
-    
-    
+
     /**
      * Busca o nó cujo valor é igual ao passado como parâmetro. Essa é a implementação 
      * iterativa clássica da busca binária em uma árvore binária de pesquisa.
@@ -56,16 +48,15 @@ public class BST {
      * o elemento não esteja presente na árvore.
      */
     public Node search(int element) {
-        return search(this.root, element);
-    }
+        if(isEmpty()) return null;
 
-    private Node search(Node current, int v){
-        if(current == null) return null;
-        if(current.value == v) return current;
-        if(current.value > v) return search(current.left, v);
-        return search(current.right, v);
+        Node aux = this.root;
+        while(aux != null && aux.value != element){
+            if(aux.value > element) aux = aux.left;
+            else aux = aux.right;
+        }
+        return aux;
     }
-    
     
     /**
      * Retorna a altura da árvore.
@@ -76,7 +67,7 @@ public class BST {
 
     private int height(Node current){
         if(current == null) return -1;
-        return 1 + Max(height(current.left), height(current.right));
+        return 1 + Math.max(height(current.left), height(current.right));
     }
 
     public boolean equals(BST outra) {
@@ -84,11 +75,11 @@ public class BST {
     }
 
     private boolean equals(Node n1, Node n2){
-        if(n1 == null && n2 == null) return true;
+       if(n1 == null && n2 == null) return true;
 
-        if(n1 == null || n2 == null) return false;
+       if(n1 == null || n2 == null) return false;
 
-        return n1.value == n2.value && equals(n1.right, n2.right) && equals(n1.left, n2.left);
+       return n1.value == n2.value && equals(n1.left, n2.left) && equals(n1.right, n2.right);
     }
 
     /**
@@ -98,12 +89,12 @@ public class BST {
         return contaFolhas(this.root);
     }
 
-    private int contaFolhas(Node current){
-        if(current == null) return 0;
-        if(current.left == null && current.right == null) return 1;
-        return contaFolhas(current.left) + contaFolhas(current.right);
-    }   
-
+    private int contaFolhas(Node no){
+        if(no == null) return 0;
+        if(no.isLeaf()) return 1;
+        return contaFolhas(no.left) + contaFolhas(no.right);
+    }
+      
     /**
      * @return o tamanho da árvore.
      */
@@ -112,48 +103,84 @@ public class BST {
     }
 
     public void remove(int v){
-        Node toRemove = search(v);
-        if(toRemove == null) return;
+        if(isEmpty()) throw new RuntimeException("Vazia");
 
-        if(toRemove.isLeaf()){   // caso 1
-            if(toRemove == this.root) this.root = null;
-            if(toRemove.value < toRemove.parent.value){
-                toRemove.parent.left = null;
-            } else {
-                toRemove.parent.right = null;
+        Node remov = search(v);
+        if(remov == null) return;
+        
+        if(remov.isLeaf()) {                  //CASO 1: É FOLHA
+            if(remov == this.root) this.root = null;
+            else {
+                if(remov.parent.value > remov.value) remov.parent.left = null;
+                else remov.parent.right = null;
             }
-        } else if(toRemove.hasOnlyLeftChild()){
-            
+            this.size--;
+        } else if(remov.hasOnlyLeftChild()){   //CASO 2: TEM UM FILHO
+            if(remov == this.root) {
+                this.root = remov.left;
+                this.root.parent = null;
+            } else {
+                if(remov.parent.value > remov.value){
+                    remov.parent.left = remov.left;
+                } else {
+                    remov.parent.right = remov.left;
+                }
+                remov.left.parent = remov.parent;
+            }
+            this.size--;
+        } else if(remov.hasOnlyRightChild()){   //CASO 2: TEM UM FILHO
+            if(remov == this.root){
+                this.root = remov.right;
+                this.root.parent = null;
+            } else {
+                if(remov.parent.value > remov.value){
+                    remov.parent.left = remov.right;
+                } else {
+                    remov.parent.right = remov.right;
+                }
+                remov.right.parent = remov.parent;
+            }
+            this.size--;
+        } else {                                //CASO 3: TEM DOIS FILHOS
+            Node sucessor = sucessor(remov);
+            int aux = sucessor.value;
+            remove(aux);
+            remov.value = aux;
         }
 
     }
 
-    public Node sucessor(Node n){
-        if(n == null) return null;
+    public Node sucessor(Node no){
+        if(no == null) return null;
 
-        if(n.right != null) return min(n.right);
+        if(no.right != null)
+            return min(no.right);
         else {
-            Node aux = n.parent;
-
-            while(aux != null && aux.value < n.value)
+            Node aux = no.parent;
+            while(aux != null && aux.value < no.value)
                 aux = aux.parent;
-        
             return aux;
         }
     }
 
-    public Node min(){
-        if(isEmpty()) return null;
-        return min(this.root);
+    public Node min(Node no){
+        if(no == null) return null;
+
+        Node aux = no;
+        while(aux.left != null)
+            aux = aux.left;
+        return aux;
     }
 
-    private Node min(Node current){
-        if(current.left == null) return current;
-        return min(current.left);
+    public Node max(Node no){
+       if(no == null) return null;
+
+        Node aux = no;
+        while(aux.right != null)
+            aux = aux.right;
+        return aux;
     }
-    
 }
-
 
 class Node {
     
